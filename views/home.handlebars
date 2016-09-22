@@ -1,0 +1,13 @@
+<h1>Example app: Home</h1>
+<div class="card-panel teal">List mit coolen Leuten:</div>
+<div>
+	{{#each persons}}
+	{{#if isCool}} 
+	{{name}}
+	{{/if}}
+	{{/each}}
+</div>
+<div>
+	{{id}}
+	{{name}}
+</div>
