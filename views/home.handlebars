@@ -1,13 +1,40 @@
 <h1>Example app: Home</h1>
 <div class="card-panel teal">List mit coolen Leuten:</div>
-<div>
-	{{#each persons}}
-	{{#if isCool}} 
-	{{name}}
-	{{/if}}
+<div class="container">
+	{{#each accs}}
+	<div>name:{{name}}<br/>id:{{id}}</div>
 	{{/each}}
+	
 </div>
-<div>
-	{{id}}
-	{{name}}
+
+<div class="container">
+	{{#each games}}
+	{{summonerId}}
+	<div class="card">	
+		{{gameId}}
+		<br/>
+		champ: <a href="www.google.com"><img src="http://ddragon.leagueoflegends.com/cdn/6.19.1/img/champion/{{champImage}}" height=40px width=40px></a>
+		<br/>
+		Level: {{stats.level}}
+		<br/>
+		K/D/A: 
+		{{#if stats.championsKilled}}
+			{{stats.championsKilled}}
+			{{else}}0
+		{{/if}}
+		/
+		{{#if stats.numDeaths}}
+			{{stats.numDeaths}}
+			{{else}}0
+		{{/if}}
+		/
+		{{#if stats.assists}}
+			{{stats.assists}}
+			{{else}}0
+		{{/if}}
+		<br/>
+		CS: {{stats.minionsKilled}}
+		<br/>
+	</div>
+	{{/each}}
 </div>

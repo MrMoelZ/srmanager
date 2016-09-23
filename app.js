@@ -16,17 +16,10 @@ app.set('view engine','handlebars');
 app.use(cookieParser());
 app.use('/materialize',express.static(__dirname+'/node_modules/materialize-css/bin'));
 
-app.get('/',function(req,res) {
-	res.sendFile(__dirname+'/views/index.html');
-});
-
 app.get('/1',function(req,res) {
 	let counter=0;
 	res.cookie('counter',++counter);
 	if(req.cookies.counter)console.log('counter:',req.cookies.counter);
-	controller.dbtest(function(data) {
-		console.log(data);
-	});
 	model = data;
 	model.title = 'Summonersrift-Manager';
 	let name = 'mrholz';
@@ -35,6 +28,32 @@ app.get('/1',function(req,res) {
 		model = JSON.parse(data)[name];
 		res.render('home',model);
 	});
+});
+
+
+app.get('/',function(req,res) {
+	let listOfSummoners = ['mrholz','djanysus','hubert huhn','linler'];
+	let promises = [];
+	promises.push(controller.getIdForEachSummoner(listOfSummoners)
+		.then(function(data) {
+			model.accs=data;
+		})
+		.catch(err=>{
+			console.log('ERROR',err);
+		})
+	);
+	promises.push(controller.getGamesForSummonerId(19716793)
+		.then(function(data) {
+			model.games=data;
+		})
+		.catch(err=>{
+					console.log('ERROR',err);
+		})
+	);
+	Promise.all(promises)
+		.then(()=> { res.render('home',model)})
+		.catch(()=>console.log('error'));
+
 });
 
 //Authentication
